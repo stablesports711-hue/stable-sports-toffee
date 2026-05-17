@@ -5,7 +5,7 @@ OUTPUT_FILE = "toffee.m3u"
 
 CUSTOM_CHANNELS = [
     {
-        "extinf": '#EXTINF:-1 group-title="Sports Channels" tvg-logo="https://assets-prod.services.toffeelive.com/f_png,w_300,q_85/ljE2lZ0BNnOkwJLW9lrg/posters/b4bee75a-b8a3-4594-b562-6e3910d71625.png",Bangladesh VS Pakistan',
+        "extinf": '#EXTINF:-1 group-title="PROMO" tvg-logo="https://i.postimg.cc/13XVVyg3/1773936967533.png",STABLE-SPORTS TV"',
         "url": "https://your-stream-link.m3u8"
     }
 ]
