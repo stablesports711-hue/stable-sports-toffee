@@ -5,9 +5,11 @@ OUTPUT_FILE = "toffee.m3u"
 
 CUSTOM_CHANNELS = [
     {
-        "extinf": '#EXTINF:-1 group-title="PROMO" tvg-logo="https://i.postimg.cc/13XVVyg3/1773936967533.png",STABLE-SPORTS TV"',
-        "url": "http://198.195.239.50:8095/StarSports2/tracks-v1a1/mono.m3u8",
-        "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Colors_Bengali_HD.png",Colors Bangla"',
+        "extinf": '#EXTINF:-1 group-title="PROMO" tvg-logo="https://i.postimg.cc/13XVVyg3/1773936967533.png",STABLE-SPORTS TV',
+        "url": "http://198.195.239.50:8095/StarSports2/tracks-v1a1/mono.m3u8"
+    },
+    {
+        "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Colors_Bengali_HD.png",Colors Bangla',
         "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/532.ts"
     }
 ]
