@@ -1,6 +1,6 @@
 import requests
 
-SOURCE_URL = "https://raw.githubusercontent.com/abusaeeidx/Toffee-playlist/refs/heads/main/ott_navigator.m3u"
+SOURCE_URL = "https://raw.githubusercontent.com/sm-monirulislam/Toffee-Auto-Update-Playlist/refs/heads/main/OTT_Navigator.m3u"
 OUTPUT_FILE = "toffee.m3u"
 
 CUSTOM_CHANNELS = [
