@@ -16,9 +16,10 @@ CUSTOM_CHANNELS = [
         "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ZeeBangla.png",ZEE Bangla HD',
         "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/536.ts"
     },
-    {'#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://i.postimg.cc/RZyCxCZ6/20260725-204110.png",AKASH GO Pro',
-        "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/536.ts"
-    }
+    {
+    "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://i.postimg.cc/RZyCxCZ6/20260725-204110.png",AKASH GO Pro',
+    "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/536.ts"
+}
 ]
 
 
