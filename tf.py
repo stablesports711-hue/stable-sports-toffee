@@ -6,20 +6,16 @@ OUTPUT_FILE = "toffee.m3u"
 CUSTOM_CHANNELS = [
     {
         "extinf": '#EXTINF:-1 group-title="PROMO" tvg-logo="https://i.postimg.cc/13XVVyg3/1773936967533.png",STABLE-SPORTS TV',
-        "url": "http://198.195.239.50:8095/StarSports2/tracks-v1a1/mono.m3u8"
+        "url": "https://res.cloudinary.com/qleik3si/video/upload/v1785235285/VN20260728_161756_ev6pow.mp4"
     },
     {
         "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Colors_Bengali_HD.png",Colors Bangla HD',
-        "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/532.ts"
+        "url": "https://res.cloudinary.com/qleik3si/video/upload/v1785235285/VN20260728_161756_ev6pow.mp4"
     },
     {
         "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ZeeBangla.png",ZEE Bangla HD',
-        "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/536.ts"
-    },
-    {
-    "extinf": '#EXTINF:-1 group-title="ENTERTAINMENT CHANNELS" tvg-logo="https://i.postimg.cc/RZyCxCZ6/20260725-204110.png",AKASH GO Pro',
-    "url": "http://main.epgmaker.com/live/y49sz6KMQs/6115263489/536.ts"
-}
+        "url": "https://res.cloudinary.com/qleik3si/video/upload/v1785235285/VN20260728_161756_ev6pow.mp4"
+    }
 ]
 
 
