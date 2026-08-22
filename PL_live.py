@@ -10,9 +10,9 @@ OUTPUT_FILE = "PL Live.m3u"
 # =========================================================
 
 CUSTOM_CHANNEL = {
-    "name": "MY CUSTOM CHANNEL",
-    "logo": "https://example.com/logo.png",
-    "url": "https://example.com/stream.m3u8"
+    "name": "STABLE-SPORTS TV™",
+    "logo": "https://i.postimg.cc/13XVVyg3/1773936967533.png",
+    "url": "https://res.cloudinary.com/qleik3si/video/upload/v1785235285/VN20260728_161756_ev6pow.mp4"
 }
 
 
