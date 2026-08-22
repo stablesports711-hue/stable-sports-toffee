@@ -4,33 +4,35 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: "*/20 * * * *"
 
 permissions:
   contents: write
 
 jobs:
   update-playlist:
-
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.12"
 
-      - name: Install Requests
-        run: pip install requests
+      - name: Install requests
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests
 
-      - name: Run Playlist Update
-        run: python pl_live.py
+      - name: Run Python
+        run: |
+          python pl_live.py
 
-      - name: Save Updated Playlist
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -38,8 +40,8 @@ jobs:
           git add "PL Live.m3u"
 
           if git diff --cached --quiet; then
-            echo "No changes detected."
+            echo "No changes to commit."
           else
-            git commit -m "Auto update PL Live playlist"
+            git commit -m "Auto update PL Live"
             git push
           fi
