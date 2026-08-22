@@ -6,112 +6,118 @@ OUTPUT_FILE = "PL Live.m3u"
 
 # =========================================================
 # CUSTOM CHANNEL
-# এখানে তোমার ১টি নিজের চ্যানেলের তথ্য বসাবে
+# এখানে তোমার নিজের ১টি চ্যানেলের তথ্য বসাবে
 # =========================================================
 
 CUSTOM_CHANNEL = {
-    "name": "STABLE-SPORTS TV™",
+    "name": "STABLE-SPORTS TV",
     "logo": "https://i.postimg.cc/13XVVyg3/1773936967533.png",
     "url": "https://res.cloudinary.com/qleik3si/video/upload/v1785235285/VN20260728_161756_ev6pow.mp4"
 }
 
 
-def get_pl_live_channels():
+def update_playlist():
 
-    response = requests.get(SOURCE_URL, timeout=30)
+    print("Downloading source playlist...")
+
+    response = requests.get(
+        SOURCE_URL,
+        timeout=60,
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        }
+    )
+
     response.raise_for_status()
 
     lines = response.text.splitlines()
-
-    channels = []
-    current_channel = []
-
-    for line in lines:
-
-        if line.startswith("#EXTINF:"):
-
-            # আগের channel পরীক্ষা
-            if current_channel:
-
-                extinf = current_channel[0]
-
-                # শুধু PL Live নামের channel
-                if "PL Live" in extinf:
-                    channels.append(current_channel)
-
-            current_channel = [line]
-
-        elif current_channel:
-            current_channel.append(line)
-
-    # শেষ channel
-    if current_channel:
-
-        extinf = current_channel[0]
-
-        if "PL Live" in extinf:
-            channels.append(current_channel)
-
-    return channels
-
-
-def change_group_title(extinf):
-
-    # পুরোনো group-title থাকলে LIVE SPORTS করা
-    if 'group-title=' in extinf:
-
-        extinf = re.sub(
-            r'group-title="[^"]*"',
-            'group-title="LIVE SPORTS"',
-            extinf
-        )
-
-    else:
-
-        extinf = extinf.replace(
-            '#EXTINF:-1',
-            '#EXTINF:-1 group-title="LIVE SPORTS"',
-            1
-        )
-
-    return extinf
-
-
-def update_playlist():
 
     output = [
         "#EXTM3U",
         "#PLAYLIST:PL Live"
     ]
 
-    # =====================================================
-    # SOURCE CHANNELS
-    # =====================================================
+    source_count = 0
 
-    channels = get_pl_live_channels()
+    current = []
 
-    for channel in channels:
+    for line in lines:
 
-        if not channel:
-            continue
+        if line.startswith("#EXTINF:"):
 
-        # EXTINF পরিবর্তন
-        channel[0] = change_group_title(channel[0])
+            # আগের channel save
+            if current:
 
-        output.extend(channel)
+                extinf = current[0]
+
+                if "PL Live" in extinf:
+
+                    # group-title পরিবর্তন
+                    extinf = re.sub(
+                        r'group-title="[^"]*"',
+                        'group-title="LIVE SPORTS"',
+                        extinf
+                    )
+
+                    # group-title না থাকলে যোগ করবে
+                    if 'group-title="LIVE SPORTS"' not in extinf:
+
+                        extinf = extinf.replace(
+                            "#EXTINF:-1",
+                            '#EXTINF:-1 group-title="LIVE SPORTS"',
+                            1
+                        )
+
+                    current[0] = extinf
+
+                    output.extend(current)
+
+                    source_count += 1
+
+            current = [line]
+
+        else:
+
+            if current:
+                current.append(line)
+
+    # শেষ channel
+    if current:
+
+        extinf = current[0]
+
+        if "PL Live" in extinf:
+
+            extinf = re.sub(
+                r'group-title="[^"]*"',
+                'group-title="LIVE SPORTS"',
+                extinf
+            )
+
+            if 'group-title="LIVE SPORTS"' not in extinf:
+
+                extinf = extinf.replace(
+                    "#EXTINF:-1",
+                    '#EXTINF:-1 group-title="LIVE SPORTS"',
+                    1
+                )
+
+            current[0] = extinf
+
+            output.extend(current)
+
+            source_count += 1
 
     # =====================================================
     # CUSTOM CHANNEL
     # =====================================================
 
-    custom_extinf = (
-        '#EXTINF:-1 '
-        'group-title="LIVE SPORTS" '
+    output.append(
+        '#EXTINF:-1 group-title="LIVE SPORTS" '
         f'tvg-logo="{CUSTOM_CHANNEL["logo"]}",'
         f'{CUSTOM_CHANNEL["name"]}'
     )
 
-    output.append(custom_extinf)
     output.append(CUSTOM_CHANNEL["url"])
 
     # =====================================================
@@ -121,12 +127,12 @@ def update_playlist():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as file:
         file.write("\n".join(output) + "\n")
 
-    source_count = len(channels)
-
-    print(f"Source PL Live channels : {source_count}")
-    print("Custom channel          : 1")
-    print(f"Total channels          : {source_count + 1}")
-    print(f"Output file             : {OUTPUT_FILE}")
+    print("--------------------------------")
+    print(f"PL Live channels : {source_count}")
+    print("Custom channel  : 1")
+    print(f"Total channels  : {source_count + 1}")
+    print(f"Output file     : {OUTPUT_FILE}")
+    print("--------------------------------")
 
 
 if __name__ == "__main__":
