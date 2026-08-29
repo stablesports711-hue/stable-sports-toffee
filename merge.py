@@ -1,4 +1,4 @@
- import requests
+import requests
 from urllib.parse import urljoin
 from pathlib import Path
 
@@ -11,30 +11,38 @@ SOURCES = [
 
 OUTPUT = "final.m3u8"
 
-headers = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
 all_segments = []
 target_duration = 0
 
-for name, url in SOURCES:
-    print("Processing:", name)
+for name, playlist_url in SOURCES:
+    print(f"Processing: {name}")
 
-    r = requests.get(url, headers=headers, timeout=30)
-    r.raise_for_status()
+    response = requests.get(
+        playlist_url,
+        headers=HEADERS,
+        timeout=30
+    )
 
-    lines = [x.strip() for x in r.text.splitlines() if x.strip()]
+    response.raise_for_status()
 
+    lines = response.text.splitlines()
     current_duration = None
 
     for line in lines:
+        line = line.strip()
+
+        if not line:
+            continue
 
         if line.startswith("#EXT-X-TARGETDURATION:"):
             try:
-                td = int(line.split(":", 1)[1])
-                target_duration = max(target_duration, td)
-            except:
+                value = int(line.split(":", 1)[1])
+                target_duration = max(target_duration, value)
+            except ValueError:
                 pass
 
         elif line.startswith("#EXTINF:"):
@@ -42,25 +50,21 @@ for name, url in SOURCES:
                 current_duration = float(
                     line.split(":", 1)[1].split(",", 1)[0]
                 )
-            except:
+            except ValueError:
                 current_duration = None
 
         elif not line.startswith("#"):
             if current_duration is not None:
-                segment_url = urljoin(url, line)
+                segment_url = urljoin(playlist_url, line)
 
-                all_segments.append({
-                    "duration": current_duration,
-                    "url": segment_url
-                })
+                all_segments.append(
+                    ("segment", current_duration, segment_url)
+                )
 
                 current_duration = None
 
-    # Part শেষ হওয়ার পরে discontinuity
     if name != SOURCES[-1][0]:
-        all_segments.append({
-            "discontinuity": True
-        })
+        all_segments.append(("discontinuity", 0, ""))
 
 if not all_segments:
     raise RuntimeError("No video segments found.")
@@ -76,13 +80,12 @@ output = [
     "#EXT-X-PLAYLIST-TYPE:VOD"
 ]
 
-for item in all_segments:
-
-    if item.get("discontinuity"):
+for item_type, duration, url in all_segments:
+    if item_type == "discontinuity":
         output.append("#EXT-X-DISCONTINUITY")
     else:
-        output.append(f"#EXTINF:{item['duration']:.3f},")
-        output.append(item["url"])
+        output.append(f"#EXTINF:{duration:.3f},")
+        output.append(url)
 
 output.append("#EXT-X-ENDLIST")
 
@@ -91,5 +94,7 @@ Path(OUTPUT).write_text(
     encoding="utf-8"
 )
 
-print("Created:", OUTPUT)
-print("Total segments:", len(all_segments))
+print("Successfully created:", OUTPUT)
+print("Total segments:", sum(
+    1 for item in all_segments if item[0] == "segment"
+))
