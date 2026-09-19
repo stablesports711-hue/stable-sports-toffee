@@ -1,7 +1,7 @@
 import requests
 import os
 
-SOURCE_URL = "https://raw.githubusercontent.com/srhady/toffee-bd/refs/heads/main/toffee_playlist.m3u"
+SOURCE_URL = "https://raw.githubusercontent.com/sm-monirulislam/Toffee-Auto-Update/refs/heads/main/toffee_playlist.m3u"
 
 OUTPUT_FILE = "toffee.m3u"
 CUSTOM_FILE = "custom_channels.m3u"
