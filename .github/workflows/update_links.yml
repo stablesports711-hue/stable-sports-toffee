@@ -2,32 +2,31 @@ name: Update Ripalc Playlist
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Har 1 ghante mein chalega
-  workflow_dispatch:      # Manual run button
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install pycryptodome requests
+        run: |
+          pip install requests pycryptodome
 
-      - name: Run script (ripalc.py)
-        # 👇 Sirf ye secrets section update kiya hai
+      - name: Run script
         env:
-          CRIC_BASE_URL: ${{ secrets.CRIC_BASE_URL }}
           CRIC_KEY_1: ${{ secrets.CRIC_KEY_1 }}
           CRIC_IV_1: ${{ secrets.CRIC_IV_1 }}
           CRIC_KEY_2: ${{ secrets.CRIC_KEY_2 }}
@@ -38,6 +37,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
           git add playlist.m3u
-          git commit -m "Update playlist using ripalc" || exit 0
+
+          git commit -m "Auto update playlist" || echo "No changes to commit"
+
           git push
