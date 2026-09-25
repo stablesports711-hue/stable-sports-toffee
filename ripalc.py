@@ -236,9 +236,9 @@ def main():
             cat = event.get('eventInfo', {}).get('eventCat', '').lower()
             title = event.get('title', '').lower()
             
-            if 'cricket' in cat or 'cricket' in title or 'ind' in title or 'zim' in title or 'warm' in title:
-                match_entries = fetch_match_streams(event)
-                all_entries.extend(match_entries)
+            if 'cricket' in cat or 'football' in cat or 'ban' in title:
+    match_entries = fetch_match_streams(event)
+    all_entries.extend(match_entries)
 
         timestamp = (datetime.utcnow() + timedelta(hours=5, minutes=30)).strftime('%Y-%m-%d %I:%M %p IST')
         
