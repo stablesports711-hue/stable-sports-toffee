@@ -8,3 +8,6 @@ https://raw.githubusercontent.com/stablesports711-hue/stable-sports-movie/refs/h
 
 #EXTINF:-1 tvg-logo="https://images.seeklogo.com/logo-png/26/1/star-movies-logo-png_seeklogo-268247.png" group-title="INDIAN",Star movies HD 
 https://raw.githubusercontent.com/stablesports711-hue/stable-sports-movie/refs/heads/main/IPTV/ASIA-TV/373304.m3u8
+
+#EXTINF:-1 tvg-logo="https://www.adgully.com/img/800/202003/star-movies-select-hd.png.jpg" group-title="INDIAN",Star movies Select HD 
+https://raw.githubusercontent.com/stablesports711-hue/stable-sports-movie/refs/heads/main/IPTV/ASIA-TV/373320.m3u8
